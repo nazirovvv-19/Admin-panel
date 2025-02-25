@@ -20,7 +20,6 @@ function Sidebar({ collapsed }) {
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
-        //   selectedKeys={["2"]}
           items={[
             {
               key: '/',

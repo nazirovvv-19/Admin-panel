@@ -9,7 +9,7 @@ function LoginPage() {
   const auth= useMyStore()
   return (
       <>
-      <h1 className="ml-170  mt-55 text-3xl font-semibold">Admin panel</h1>
+      <h1 className="ml-170  mt-35 text-3xl font-semibold">Admin panel</h1>
       <div className="h-full flex justify-between mx-auto">
         <Card
           style={{

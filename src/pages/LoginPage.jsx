@@ -28,19 +28,24 @@ function LoginPage() {
               axios
                 .post("https://library.softly.uz/auth/signin", values)
                 .then((res) => {
-                  console.log(res);
+                  console.log(res.data);
                   message.success("muvaffiqiyatli bajarildi");
                   setLoading(false);
+                  // console.log(JSON.stringify(res));
+                  
                   useMyStore.setState({
                     token: res.data.token,
                     users: res.data.user
                   })
+                  localStorage.setItem('tokenn',JSON.stringify(res.data))
+
                 })
                 .catch((e) => {
                   console.log(e);
                   message.error("xatolik");
                   setLoading(false);
                 });
+               
             }}
           >
             <Form.Item

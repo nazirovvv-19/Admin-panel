@@ -7,12 +7,14 @@ function Sidebar({ collapsed }) {
     const location = useLocation()
   return (
     <div>
-      <aside className="">
+      <aside className="h-full">
         <Menu
           style={{
-            height: "87vh",
-            maxWidth: 250,
+            height: '100%',
+            minWidth: 200,
+            width:"100%"
           }}
+          
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={["sub1"]}
           mode="inline"

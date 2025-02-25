@@ -19,7 +19,8 @@ function Categories() {
     );
   }
   return (
-    <div className="w-full h-160 overflow-auto">
+    <div className="w-full h-full p-7 overflow-auto">
+      <p className="mb-3 text-xl font-bold">Category page</p>
       <Table
         dataSource={categories}
         columns={[

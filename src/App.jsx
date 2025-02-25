@@ -12,11 +12,11 @@ function App() {
     setCollapsed(!collapsed);
   };
   return (
-    <div>
+    <div className="h-[100vh] overflow-y-hidden">
       {auth.users ? (
         <>
           <Navbar collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
-          <div className="flex ">
+          <div className="flex h-full">
             <Sidebar collapsed={collapsed} />
             <MainSection />
           </div>

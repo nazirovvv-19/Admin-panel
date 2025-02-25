@@ -21,7 +21,8 @@ function ProductsPage() {
     );
   }
   return (
-    <div className="w-full h-160 overflow-scroll">
+    <div className="w-full h-full p-4 overflow-auto ">
+      <p className="mb-2 font-bold text-xl">Product page</p>
       <Table
         style={{
           width: "100%",

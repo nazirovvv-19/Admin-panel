@@ -8,7 +8,7 @@ function ButtonAndForm() {
   const [loading, setLoaing] = useState(false);
   const state = useMyStore();
   return (
-    <div className="   h-full">
+    <div className="h-full">
       <Button
         type="primary"
         onClick={() => {

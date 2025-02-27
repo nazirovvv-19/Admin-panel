@@ -2,6 +2,7 @@ import {
   FolderOpenOutlined,
   HomeOutlined,
   ProductOutlined,
+  ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
@@ -43,11 +44,11 @@ function Sidebar({ collapsed }) {
             {
               key: "/rents",
               label: <Link to={"/rents"}>Ijaralar</Link>,
-              icon: <FolderOpenOutlined />,
+              icon: <ProfileOutlined />,
             },
             {
               key: "/user",
-              label: <Link to={"/user"}>User</Link>,
+              label: <Link to={"/user"}>Kitobxon</Link>,
               icon: <UserOutlined />,
             },
           ]}

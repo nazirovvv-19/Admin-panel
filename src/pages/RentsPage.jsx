@@ -35,7 +35,7 @@ function RentsPage() {
       <div>
         <div className="flex items-center justify-between my-3 p-2 ">
             <h1>Rents Page</h1>
-           <ButtonAndForm/>
+        
         </div>
         <div className="p-2">
           <Table
@@ -92,6 +92,7 @@ function RentsPage() {
               }
             ]}
             dataSource={ijaralar}
+            rowKey={'id'}
           />
         </div>
       </div>

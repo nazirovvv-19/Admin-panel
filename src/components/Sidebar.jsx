@@ -1,4 +1,5 @@
 import {
+  BookOutlined,
   FolderOpenOutlined,
   HomeOutlined,
   ProductOutlined,
@@ -12,13 +13,14 @@ import { Link, useLocation, useNavigate } from "react-router";
 function Sidebar({ collapsed }) {
   const location = useLocation();
   return (
-    <div className=""> 
-      <aside className="h-full">
+    <div className="">
+      <aside className="h-full ">
         <Menu
           style={{
             height: "100%",
             maxWidth: 300,
-            paddingRight:15
+            paddingRight:   5,
+            
           }}
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={["sub1"]}
@@ -48,8 +50,18 @@ function Sidebar({ collapsed }) {
             },
             {
               key: "/user",
-              label: <Link to={"/user"}>Kitobxon</Link>,
+              label: <Link to={"/user"}>Users</Link>,
               icon: <UserOutlined />,
+            },
+            {
+              key: "/stock",
+              label: <Link to={"/stock"}>Kitoblarim</Link>,
+              icon: <BookOutlined />,
+            },
+            {
+              key: "/book",
+              label: <Link to={"/book"}>Kitoblar</Link>,
+              icon: <BookOutlined />,
             },
           ]}
         />

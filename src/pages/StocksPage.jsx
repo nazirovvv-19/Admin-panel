@@ -4,19 +4,21 @@ import useMyStore from "../store/my-store";
 import { message, Spin, Table } from "antd";
 import ButtonAndForm from "../components/ButtonAndForm";
 import EditUser from "../components/EditUser";
+import { CheckCircleTwoTone, ClockCircleTwoTone } from "@ant-design/icons";
+import StockDrawer from "../components/StockDrawer";
 
-function UsersPage() {
+function StocksPage() {
   const state = useMyStore();
-  const [userss, setUserss] = useState();
+  const [stock, setStock] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState()
+  const [isOpenForm, setIsOpenForm] = useState(false);
 
   const pageSize = 10;
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://library.softly.uz/api/users", {
+      .get("https://library.softly.uz/api/stocks", {
         params: {
           size: pageSize,
           page: currentPage,
@@ -27,7 +29,7 @@ function UsersPage() {
       })
       .then((res) => {
         console.log(res.data);
-        setUserss(res.data);
+        setStock(res.data);
         message.success("muvaffiqiyatli bajarildi");
       })
       .catch((e) => {
@@ -38,7 +40,7 @@ function UsersPage() {
         setLoading(false);
       });
   }, [currentPage]);
-  if (!userss) {
+  if (!stock) {
     return (
       <div className="mx-auto mt-60">
         <Spin size="large" />
@@ -50,10 +52,10 @@ function UsersPage() {
   return (
     <div className="w-full p-6 container  overflow-auto h-full ">
       <div className="flex items-center justify-between my-2 ">
-        <h1 className="text-2xl font-bold">Kitobxon</h1>
-        <EditUser setUser={setUser} user={user} />
-        <ButtonAndForm />
+        <h1 className="text-2xl font-bold">Kitoblarim</h1>
+        <StockDrawer />
       </div>
+        {/* <EditUser isOpenForm={isOpenForm} setIsOpenForm={setIsOpenForm} /> */}
       <Table
         style={{
           width: "100%",
@@ -61,11 +63,11 @@ function UsersPage() {
         
         size="middle"
         loading={loading}
-        dataSource={userss.items}
+        dataSource={stock.items}
         pagination={{
           pageSize: pageSize,
-          current: currentPage,
-          total: userss.totalCount,
+          current:currentPage,
+          total: stock.totalCount,
         }}
         onChange={(pagination) => {
           setCurrentPage(pagination.current);
@@ -76,39 +78,35 @@ function UsersPage() {
             key: "id",
             dataIndex: "id",
             title: "Id",
-            render: (id,item)=>{
+            render: (id)=>{
               return <div onClick={()=>{
-                setUser(item)
-                
+                setIsOpenForm(true)
               }}>
                 {id}
               </div>
             }
           },
           {
-            key: "firstName",
-            dataIndex: "firstName",
-            title: "Name",
+            key: "book",
+            dataIndex: "book",
+            title: "Kitoblarim",
+            render:(book)=>{
+                return <p>
+                  {book?.id}  {book?.name}
+                </p>
+            }
           },
           {
-            key: "lastName",
-            dataIndex: "lastName",
-            title: "LastName",
+            key: "busy",
+            dataIndex: "busy",
+            title: "Bandligi",
+            render:(busy)=>{return !busy? <CheckCircleTwoTone twoToneColor={"#52c41a"}/>:<ClockCircleTwoTone twoToneColor={"#eb2f96"}/>}
           },
-          {
-            key: "phone",
-            dataIndex: "phone",
-            title: "Phone",
-          },
-          {
-            key: "gender",
-            dataIndex: "gender",
-            title: "Gender",
-          },
+          
         ]}
       />
     </div>
   );
 }
 
-export default UsersPage;
+export default StocksPage;

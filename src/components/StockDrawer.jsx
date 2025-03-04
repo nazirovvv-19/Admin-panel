@@ -3,12 +3,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStore from "../store/my-store";
 
-function StockDrawer() {
+function StockDrawer({ fetchUser}) {
   const [isOpenDrawer, setIsOpendrawer] = useState(false);
   const [loading, setLoaing] = useState(false);
   const [books, setBooks] = useState();
   const state = useMyStore();
   useEffect(()=>{
+    setLoaing(true)
     axios.get("https://library.softly.uz/api/books" ,{
         
         headers:{
@@ -19,10 +20,13 @@ function StockDrawer() {
    console.log(res.data.items);
    setBooks(res.data.items)
    message.success('booksda xatolik yoq')
+  
  }).catch((e)=>{
    console.log(e);
    message.error('booksda xatoolik')
    
+ }).finally(()=>{
+  setLoaing(false)
  })
 },[])
 if (!books) {
@@ -45,6 +49,7 @@ if (!books) {
           setIsOpendrawer(false);
         }}
         destroyOnClose
+        
       >
         <Form
           layout="vertical"
@@ -61,6 +66,7 @@ if (!books) {
                 console.log(res.data);
                 message.success("qoshildi");
                 setIsOpendrawer(false);
+                fetchUser()
               })
               .catch((e) => {
                 console.log(e);

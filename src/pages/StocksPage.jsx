@@ -1,11 +1,10 @@
+import { CheckCircleTwoTone, ClockCircleTwoTone } from "@ant-design/icons";
+import { message, Spin, Table } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import useMyStore from "../store/my-store";
-import { message, Spin, Table } from "antd";
-import ButtonAndForm from "../components/ButtonAndForm";
-import EditUser from "../components/EditUser";
-import { CheckCircleTwoTone, ClockCircleTwoTone } from "@ant-design/icons";
 import StockDrawer from "../components/StockDrawer";
+import useMyStore from "../store/my-store";
+import api from "../api/Api";
 
 function StocksPage() {
   const state = useMyStore();
@@ -15,10 +14,10 @@ function StocksPage() {
   const [isOpenForm, setIsOpenForm] = useState(false);
 
   const pageSize = 10;
-  useEffect(() => {
+  const fetchUser = () => {
     setLoading(true);
-    axios
-      .get("https://library.softly.uz/api/stocks", {
+    api
+      .get("/api/stocks", {
         params: {
           size: pageSize,
           page: currentPage,
@@ -39,6 +38,9 @@ function StocksPage() {
       .finally(() => {
         setLoading(false);
       });
+  };
+  useEffect(() => {
+    fetchUser();
   }, [currentPage]);
   if (!stock) {
     return (
@@ -50,23 +52,23 @@ function StocksPage() {
   console.log(pageSize);
 
   return (
-    <div className="w-full p-6 container  overflow-auto h-full ">
+    <div className="w-full p-6 container  overflow-auto h-full select-none ">
       <div className="flex items-center justify-between my-2 ">
         <h1 className="text-2xl font-bold">Kitoblarim</h1>
-        <StockDrawer />
+
+        <StockDrawer fetchUser={fetchUser} />
       </div>
-        {/* <EditUser isOpenForm={isOpenForm} setIsOpenForm={setIsOpenForm} /> */}
+
       <Table
+        loading={loading}
         style={{
           width: "100%",
         }}
-        
         size="middle"
-        loading={loading}
         dataSource={stock.items}
         pagination={{
           pageSize: pageSize,
-          current:currentPage,
+          current: currentPage,
           total: stock.totalCount,
         }}
         onChange={(pagination) => {
@@ -78,31 +80,31 @@ function StocksPage() {
             key: "id",
             dataIndex: "id",
             title: "Id",
-            render: (id)=>{
-              return <div onClick={()=>{
-                setIsOpenForm(true)
-              }}>
-                {id}
-              </div>
-            }
           },
           {
             key: "book",
             dataIndex: "book",
             title: "Kitoblarim",
-            render:(book)=>{
-                return <p>
-                  {book?.id}  {book?.name}
+            render: (book) => {
+              return (
+                <p>
+                  {book?.id} {book?.name}
                 </p>
-            }
+              );
+            },
           },
           {
             key: "busy",
             dataIndex: "busy",
             title: "Bandligi",
-            render:(busy)=>{return !busy? <CheckCircleTwoTone twoToneColor={"#52c41a"}/>:<ClockCircleTwoTone twoToneColor={"#eb2f96"}/>}
+            render: (busy) => {
+              return !busy ? (
+                <CheckCircleTwoTone twoToneColor={"#52c41a"} />
+              ) : (
+                <ClockCircleTwoTone twoToneColor={"#eb2f96"} />
+              );
+            },
           },
-          
         ]}
       />
     </div>

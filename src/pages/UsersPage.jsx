@@ -4,6 +4,7 @@ import useMyStore from "../store/my-store";
 import { message, Spin, Table } from "antd";
 import ButtonAndForm from "../components/ButtonAndForm";
 import EditUser from "../components/EditUser";
+import api from "../api/Api";
 
 function UsersPage() {
   const state = useMyStore();
@@ -13,17 +14,15 @@ function UsersPage() {
   const [user, setUser] = useState()
 
   const pageSize = 10;
-  useEffect(() => {
+  const fetchuser=()=>{
     setLoading(true);
-    axios
-      .get("https://library.softly.uz/api/users", {
+    api
+      .get("/api/users", {
         params: {
           size: pageSize,
           page: currentPage,
         },
-        headers: {
-          Authorization: "Bearer " + state.token,
-        },
+      
       })
       .then((res) => {
         console.log(res.data);
@@ -37,6 +36,9 @@ function UsersPage() {
       .finally(() => {
         setLoading(false);
       });
+  }
+  useEffect(() => {
+    fetchuser()
   }, [currentPage]);
   if (!userss) {
     return (
@@ -52,7 +54,7 @@ function UsersPage() {
       <div className="flex items-center justify-between my-2 ">
         <h1 className="text-2xl font-bold">Kitobxon</h1>
         <EditUser setUser={setUser} user={user} />
-        <ButtonAndForm />
+        <ButtonAndForm fetchuser={fetchuser} />
       </div>
       <Table
         style={{

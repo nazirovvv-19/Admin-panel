@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStore from "../store/my-store";
 import { Spin, Table } from "antd";
+import api from "../api/Api";
 
 function BooksPage() {
   const [book, setBook] = useState();
   const state = useMyStore();
   useEffect(() => {
-    axios
-      .get("https://library.softly.uz/api/books", {
+    api
+      .get("/api/books", {
         headers: {
           Authorization: `Bearer ${state.token}`,
         },

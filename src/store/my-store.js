@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import api from "../api/Api";
 
 const useMyStore = create((set) => {
   const ls_string = localStorage.getItem("tokenn");
@@ -10,6 +11,7 @@ const useMyStore = create((set) => {
   }
   const ls = JSON.parse(ls_string);
   console.log(ls);
+  api.defaults.headers.Authorization = `Bearer ${ls.token}`
 
   return {
     token: ls.token,

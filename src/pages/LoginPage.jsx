@@ -4,6 +4,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import axios from "axios";
 import useMyStore from "../store/my-store";
+import api from "../api/Api";
 function LoginPage() {
   const [loading, setLoading] = useState(false);
   const auth= useMyStore()
@@ -25,13 +26,13 @@ function LoginPage() {
             onFinish={(values) => {
               console.log(values);
               setLoading(true);
-              axios
-                .post("https://library.softly.uz/auth/signin", values)
+              api
+                .post("/auth/signin", values)
                 .then((res) => {
                   console.log(res.data);
                   message.success("muvaffiqiyatli bajarildi");
                   setLoading(false);
-                  // console.log(JSON.stringify(res));
+           
                   
                   useMyStore.setState({
                     token: res.data.token,

@@ -2,8 +2,9 @@ import { Button, Drawer, Form, Input, InputNumber, message, Radio } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import useMyStore from "../store/my-store";
+import api from "../api/Api";
 
-function ButtonAndForm() {
+function ButtonAndForm({fetchuser}) {
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [loading, setLoaing] = useState(false);
   const state = useMyStore();
@@ -29,20 +30,17 @@ function ButtonAndForm() {
           onFinish={(values) => {
             setLoaing(true);
             console.log(values);
-            axios
+            api
               .post(
-                "https://library.softly.uz/api/users",
+                "/api/users",
                 { ...values, phone: values.phone.toString() },
-                {
-                  headers: {
-                    Authorization: "Bearer " + state.token,
-                  },
-                }
+               
               )
               .then((res) => {
                 console.log(res.data);
                 message.success("qoshildi");
                 setIsOpenForm(false);
+                fetchuser()
               })
               .catch((e) => {
                 console.log(e);

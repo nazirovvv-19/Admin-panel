@@ -17,7 +17,7 @@ function EditUser({ user, setUser }) {
         destroyOnClose
       >
         <Form
-        
+
           layout="vertical"
           initialValues={user}
           onFinish={(values) => {

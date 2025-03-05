@@ -18,7 +18,7 @@ function RentsPage() {
   const [book, setBook] = useState();
 
   const sahifaSoni = 10;
-  useEffect(() => {
+  function fetchRents() {
     setLoading(true);
     api
       .get("/api/rents", {
@@ -54,7 +54,11 @@ function RentsPage() {
       .finally(() => {
         setLoading(false);
       });
+  }
+  useEffect(() => {
+   fetchRents()
   }, [hozirgiSahifa]);
+  
   if (!ijaralar) {
     return (
       <div>
@@ -62,6 +66,8 @@ function RentsPage() {
       </div>
     );
   }
+
+ 
 
   return (
     <div className="container mx-auto px-5 overflow-auto h-full">
@@ -71,8 +77,7 @@ function RentsPage() {
           <EditRents
             editBook={editBook}
             setEditBook={setEditBook}
-            openn={open}
-            setOpen={setOpen}
+            fetchRents={fetchRents}
           />
           <IjaralarQoshish />
         </div>
@@ -99,7 +104,9 @@ function RentsPage() {
                     <div
                       onClick={() => {
                         setOpen(true);
+                        setEditBook(item)
                       }}
+                      
                     >
                       {id}
                     </div>
